@@ -3,6 +3,7 @@ import os
 import typer
 from typing import Optional
  
+ 
 #the format to run:python exe2.py add '{\"name\": \"Iris\", \"age\": 25}'
 
 app = typer.Typer()
