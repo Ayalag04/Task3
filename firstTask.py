@@ -3,37 +3,35 @@ from fastapi.responses import JSONResponse
 import json
 import os
 
+#run :  python -m uvicorn firstTask:app --reload
 app = FastAPI()
 
-# נתיב הקובץ (שמור את הנתיב ל-iris.json או כל שם אחר שצריך)
 FILE_PATH = "iris.json"
 
-# פונקציה לעיון בנתונים קיימים
 def read_data():
     if os.path.exists(FILE_PATH):
         with open(FILE_PATH, "r") as f:
             try:
                 return json.load(f)
             except json.JSONDecodeError:
-                return []  # אם יש בעיה בקריאת הנתונים, נחזיר רשימה ריקה
+                return []  
     return []
 
-# פונקציה להוספת Payload חדש
 def append_data(payload):
     data = read_data()
     data.append(payload)
     with open(FILE_PATH, "w") as f:
-        json.dump(data, f, indent=2)  # הוספתי 'indent=2' כדי להדפיס את הנתונים בצורה קריאה
+        json.dump(data, f, indent=2)  
 
-# פונקציה להוספת payload
+
 @app.post("/add_payload")
-def add_payload(payload: dict):  # מקבל את ה-payload בצורה ישירה כ-dict
-    append_data(payload)  # מוסיף את ה-payload לקובץ
-    return JSONResponse(content={"message": "Payload added successfully"})  # הודעה למשתמש
+def add_payload(payload: dict):  
+    append_data(payload)  
+    return JSONResponse(content={"message": "Payload added successfully"})  
 
-# פונקציה להחזרת 10 ה-payloads האחרונים
+
 @app.get("/last_10_payloads")
 def get_last_10():
-    data = read_data()  # קורא את כל הנתונים
-    last_10 = data[-10:]  # לוקח את 10 האחרונים
-    return JSONResponse(content=last_10)  # מחזיר את ה-10 האחרונים
+    data = read_data()  
+    last_10 = data[-10:]  #last ten
+    return JSONResponse(content=last_10)  
