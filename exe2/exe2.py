@@ -52,3 +52,4 @@ def get_last_10():
 
 if __name__ == "__main__":
     app()
+"" 
